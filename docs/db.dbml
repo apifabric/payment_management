@@ -1,0 +1,98 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+// Or, view in VSCode with extension: "DBML Live Preview"
+
+Table Client {
+    id INTEGER [primary key]
+    name VARCHAR 
+    contact_email VARCHAR 
+    contact_phone VARCHAR 
+    }
+
+Table ClientFeedback {
+    id INTEGER [primary key]
+    project_id INTEGER 
+    feedback VARCHAR 
+    feedback_date DATETIME 
+    }
+
+Table Project {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description VARCHAR 
+    }
+
+Table Employee {
+    id INTEGER [primary key]
+    name VARCHAR 
+    position VARCHAR 
+    hire_date DATETIME 
+    }
+
+Table Invoice {
+    id INTEGER [primary key]
+    client_id INTEGER 
+    project_id INTEGER 
+    total_amount FLOAT 
+    issue_date DATETIME 
+    }
+
+Table Material {
+    id INTEGER [primary key]
+    name VARCHAR 
+    cost FLOAT 
+    }
+
+Table Payment {
+    id INTEGER [primary key]
+    amount FLOAT 
+    date DATETIME 
+    project_id INTEGER 
+    }
+
+Table PaymentMethod {
+    id INTEGER [primary key]
+    method_name VARCHAR 
+    }
+
+Table ProjectEmployee {
+    id INTEGER [primary key]
+    project_id INTEGER 
+    employee_id INTEGER 
+    role VARCHAR 
+    }
+
+Table ProjectMaterial {
+    id INTEGER [primary key]
+    project_id INTEGER 
+    material_id INTEGER 
+    quantity INTEGER 
+    }
+
+Table ProjectPaymentMethod {
+    id INTEGER [primary key]
+    project_id INTEGER 
+    payment_method_id INTEGER 
+    }
+
+Table Task {
+    id INTEGER [primary key]
+    description VARCHAR 
+    due_date DATETIME 
+    project_id INTEGER 
+    }
+
+
+
+// Relationships
+    Ref: ClientFeedback.(project_id) < Project.(id)
+    Ref: Invoice.(client_id) < Client.(id)
+    Ref: Invoice.(project_id) < Project.(id)
+    Ref: Payment.(project_id) < Project.(id)
+    Ref: ProjectEmployee.(employee_id) < Employee.(id)
+    Ref: ProjectEmployee.(project_id) < Project.(id)
+    Ref: ProjectMaterial.(material_id) < Material.(id)
+    Ref: ProjectMaterial.(project_id) < Project.(id)
+    Ref: ProjectPaymentMethod.(payment_method_id) < PaymentMethod.(id)
+    Ref: ProjectPaymentMethod.(project_id) < Project.(id)
+    Ref: Task.(project_id) < Project.(id)

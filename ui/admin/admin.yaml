@@ -1,0 +1,317 @@
+about:
+  date: November 04, 2024 08:21:15
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 11
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Client:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: contact_email
+    - name: contact_phone
+    - name: id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - client_id
+      name: InvoiceList
+      resource: Invoice
+    type: Client
+    user_key: name
+  ClientFeedback:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: project_id
+      required: true
+    - name: feedback
+    - name: feedback_date
+      type: DATETIME
+    tab_groups:
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: ClientFeedback
+    user_key: id
+  Employee:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: position
+    - name: hire_date
+      type: DATETIME
+    - name: id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - employee_id
+      name: ProjectEmployeeList
+      resource: ProjectEmployee
+    type: Employee
+    user_key: name
+  Invoice:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: client_id
+      required: true
+    - name: project_id
+      required: true
+    - name: total_amount
+      required: true
+    - name: issue_date
+      type: DATETIME
+    tab_groups:
+    - direction: toone
+      fks:
+      - client_id
+      name: client
+      resource: Client
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: Invoice
+    user_key: id
+  Material:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: cost
+    - name: id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - material_id
+      name: ProjectMaterialList
+      resource: ProjectMaterial
+    type: Material
+    user_key: name
+  Payment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: project_id
+      required: true
+    - name: amount
+      required: true
+    - name: date
+      type: DATETIME
+    tab_groups:
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: Payment
+    user_key: id
+  PaymentMethod:
+    attributes:
+    - label: ' method_name*'
+      name: method_name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - payment_method_id
+      name: ProjectPaymentMethodList
+      resource: ProjectPaymentMethod
+    type: PaymentMethod
+    user_key: method_name
+  Project:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: description
+    - name: id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - project_id
+      name: ClientFeedbackList
+      resource: ClientFeedback
+    - direction: tomany
+      fks:
+      - project_id
+      name: InvoiceList
+      resource: Invoice
+    - direction: tomany
+      fks:
+      - project_id
+      name: PaymentList
+      resource: Payment
+    - direction: tomany
+      fks:
+      - project_id
+      name: ProjectEmployeeList
+      resource: ProjectEmployee
+    - direction: tomany
+      fks:
+      - project_id
+      name: ProjectMaterialList
+      resource: ProjectMaterial
+    - direction: tomany
+      fks:
+      - project_id
+      name: ProjectPaymentMethodList
+      resource: ProjectPaymentMethod
+    - direction: tomany
+      fks:
+      - project_id
+      name: TaskList
+      resource: Task
+    type: Project
+    user_key: name
+  ProjectEmployee:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: employee_id
+      required: true
+    - name: project_id
+      required: true
+    - name: role
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: ProjectEmployee
+    user_key: id
+  ProjectMaterial:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: material_id
+      required: true
+    - name: project_id
+      required: true
+    - name: quantity
+      required: true
+    tab_groups:
+    - direction: toone
+      fks:
+      - material_id
+      name: material
+      resource: Material
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: ProjectMaterial
+    user_key: id
+  ProjectPaymentMethod:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: payment_method_id
+      required: true
+    - name: project_id
+      required: true
+    tab_groups:
+    - direction: toone
+      fks:
+      - payment_method_id
+      name: payment_method
+      resource: PaymentMethod
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: ProjectPaymentMethod
+    user_key: id
+  Task:
+    attributes:
+    - label: ' description*'
+      name: description
+      required: true
+      search: true
+      sort: true
+    - name: project_id
+      required: true
+    - name: due_date
+      type: DATETIME
+    - name: id
+    tab_groups:
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: Task
+    user_key: description
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

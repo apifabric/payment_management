@@ -1,0 +1,485 @@
+about:
+  date: November 04, 2024 08:21:15
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Client:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: contact_email
+      template: text
+      type: VARCHAR
+    - name: contact_phone
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    label: Client
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - client_id
+      name: InvoiceList
+      resource: Invoice
+    type: Client
+  ClientFeedback:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: project_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: feedback
+      template: text
+      type: VARCHAR
+    - name: feedback_date
+      type: DATETIME
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    label: ClientFeedback
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: ClientFeedback
+  Employee:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: position
+      template: text
+      type: VARCHAR
+    - name: hire_date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    label: Employee
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - employee_id
+      name: ProjectEmployeeList
+      resource: ProjectEmployee
+    type: Employee
+  Invoice:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: client_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: project_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: total_amount
+      required: true
+      template: real
+      type: FLOAT
+    - name: issue_date
+      type: DATETIME
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    label: Invoice
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - client_id
+      name: client
+      resource: Client
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: Invoice
+  Material:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: cost
+      template: real
+      type: FLOAT
+    - name: id
+      template: integer
+      type: INTEGER
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    label: Material
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - material_id
+      name: ProjectMaterialList
+      resource: ProjectMaterial
+    type: Material
+  Payment:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: project_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: amount
+      required: true
+      template: real
+      type: FLOAT
+    - name: date
+      type: DATETIME
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    label: Payment
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: Payment
+  PaymentMethod:
+    columns:
+    - label: ' method_name*'
+      name: method_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: method_name
+    home_template: home_template.html
+    label: PaymentMethod
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - payment_method_id
+      name: ProjectPaymentMethodList
+      resource: ProjectPaymentMethod
+    type: PaymentMethod
+  Project:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: description
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    label: Project
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - project_id
+      name: ClientFeedbackList
+      resource: ClientFeedback
+    - direction: tomany
+      fks:
+      - project_id
+      name: InvoiceList
+      resource: Invoice
+    - direction: tomany
+      fks:
+      - project_id
+      name: PaymentList
+      resource: Payment
+    - direction: tomany
+      fks:
+      - project_id
+      name: ProjectEmployeeList
+      resource: ProjectEmployee
+    - direction: tomany
+      fks:
+      - project_id
+      name: ProjectMaterialList
+      resource: ProjectMaterial
+    - direction: tomany
+      fks:
+      - project_id
+      name: ProjectPaymentMethodList
+      resource: ProjectPaymentMethod
+    - direction: tomany
+      fks:
+      - project_id
+      name: TaskList
+      resource: Task
+    type: Project
+  ProjectEmployee:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: employee_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: project_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: role
+      template: text
+      type: VARCHAR
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    label: ProjectEmployee
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - employee_id
+      name: employee
+      resource: Employee
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: ProjectEmployee
+  ProjectMaterial:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: material_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: project_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: quantity
+      required: true
+      template: integer
+      type: INTEGER
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    label: ProjectMaterial
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - material_id
+      name: material
+      resource: Material
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: ProjectMaterial
+  ProjectPaymentMethod:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: payment_method_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: project_id
+      required: true
+      template: integer
+      type: INTEGER
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    label: ProjectPaymentMethod
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - payment_method_id
+      name: payment_method
+      resource: PaymentMethod
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: ProjectPaymentMethod
+  Task:
+    columns:
+    - label: ' description*'
+      name: description
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: project_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: due_date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: description
+    home_template: home_template.html
+    label: Task
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - project_id
+      name: project
+      resource: Project
+    type: Task
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false
